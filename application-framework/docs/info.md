@@ -1,11 +1,11 @@
 
-##### Initialise project
+#### Initialise project
 `npm init -y`
 
-##### Install webpack and webpack-cli
+#### Install webpack and webpack-cli
 `npm install --save-dev webpack webpack-cli`
 
-##### Add scripts in `package.json`
+#### Add scripts in `package.json`
 ```javascript
   "scripts": {
     "start": "webpack --mode=development",
@@ -21,15 +21,15 @@ This --mode=development can also be added in `webpack.config.js` as following
   };
 ```
 
-##### Configuring Webpack for React
+#### Configuring Webpack for React
 `npm install react react-dom`
 `npm install --save-dev @babel/core babel-loader @babel/preset-env @babel/preset-react`
 
-##### Configure CSS and CSS modules
+#### Configure CSS and CSS modules
 `npm install --save-dev style-loader css-loader`
 
 
-##### Configuring webpack and babel
+#### Configuring webpack and babel
 
 Create `babel.config.json` in the root folder and put
 ```json
@@ -69,7 +69,7 @@ module.exports = {
 
 ```
 
-##### Extract the CSS to its own styles.css
+#### Extract the CSS to its own styles.css
 
 `npm install --save-dev mini-css-extract-plugin`
 
@@ -84,7 +84,7 @@ plugins: [
 ]
 ```
 
-##### Configure the .css and module.css to be used together in webpack
+#### Configure the .css and module.css to be used together in webpack
 
 Put the following in the `webpack.config.js`, the file will look like
 
@@ -138,7 +138,7 @@ module.exports = {
 };
 ```
 
-##### Specifying the entrypoint to the application
+#### Specifying the entrypoint to the application
 ```javascript
 module.exports = {
   // Entry point to the application
@@ -146,7 +146,7 @@ module.exports = {
 }
 ```
 
-##### Cleaning up the dist folder after every build
+#### Cleaning up the dist folder after every build
 
 ```javascript
 
@@ -163,7 +163,7 @@ module.exports = {
 
 ```
 
-##### Add Support for SVG Icons
+#### Add Support for SVG Icons
 `npm install --save-dev @svgr/webpack`
 
 ```javascript
@@ -236,7 +236,7 @@ module.exports = {
 
 ```
 
-##### Add assets
+#### Add assets
 ```javascript
   module.exports = {
     module: {
