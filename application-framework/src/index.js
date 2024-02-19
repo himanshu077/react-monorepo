@@ -1,12 +1,19 @@
 import ReactDOM from "react-dom/client";
-import "./global.css";
 import Button from "./components/Button";
+
+import Assets from "./examples/Assets";
+import Svgs from "./examples/Svgs";
+
+import "./global.css";
 
 function App() {
   return (
     <>
-      <h1>Rick and Morty</h1>
+      <h1>Hello world</h1>
       <Button />
+      
+      <Svgs />
+      <Assets />
     </>
   );
 }

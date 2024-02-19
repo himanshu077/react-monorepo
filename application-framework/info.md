@@ -13,6 +13,14 @@
   },
 ```
 
+
+This --mode=development can also be added in `webpack.config.js` as following
+```json
+  module.exports = {
+    mode: 'development',
+  };
+```
+
 ##### Configuring Webpack for React
 `npm install react react-dom`
 `npm install --save-dev @babel/core babel-loader @babel/preset-env @babel/preset-react`
@@ -51,21 +59,6 @@ Create webpack.config.js and put
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
-  module: {
-    rules: [
-      {
-        test: /\.js$/,
-        exclude: /node_modules/,
-        use: {
-          loader: "babel-loader",
-        },
-      },
-      {
-        test: /\.css$/,
-        use: ["style-loader", "css-loader"],
-      },
-    ],
-  },
   plugins: [
     new HtmlWebpackPlugin({
       template: "./public/index.html",
@@ -91,23 +84,181 @@ plugins: [
 ]
 ```
 
+##### Configure the .css and module.css to be used together in webpack
 
-##### Configure the module.css in webpack
-
-Put the following in the webpack.config.js
+Put the following in the `webpack.config.js`, the file will look like
 
 ```javascript
-{
-  test: /\.css$/,
-  use: [
-    'style-loader',
-    {
-      loader: 'css-loader',
-      options: {
-        importLoaders: 1,
-        modules: true
-      }
-    }
-  ]
+module.exports = {
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: {
+          loader: "babel-loader",
+        },
+      },
+      // For enabling .module.css files
+      {
+        test: /\.css$/,
+        use: [
+          MiniCssExtractPlugin.loader, // instead of "style-loader",
+          {
+            loader: "css-loader",
+            options: {
+              importLoaders: 1,
+              // modules: true,
+              modules: {
+                localIdentName: "[path][name]__[local]--[hash:base64:5]",
+              },
+            },
+          },
+        ],
+        include: /\.module\.css$/,
+      },
+      // for enabling .css file only
+      {
+        test: /\.css$/,
+        use: [
+          MiniCssExtractPlugin.loader, // instead of "style-loader",
+          "css-loader",
+        ],
+        exclude: /\.module\.css$/,
+      },
+    ],
+  },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: "./public/index.html",
+      filename: "./index.html",
+    }),
+    new MiniCssExtractPlugin(),
+  ],
+};
+```
+
+##### Specifying the entrypoint to the application
+```javascript
+module.exports = {
+  // Entry point to the application
+  entry: ["./src/index.js"],
 }
+```
+
+##### Cleaning up the dist folder after every build
+
+```javascript
+
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+
+module.exports = {
+  output: {
+    filename: '[name].bundle.js',
+    path: path.resolve(__dirname, 'dist'),
+    clean: true
+  },
+}
+
+```
+
+##### Add Support for SVG Icons
+`npm install --save-dev @svgr/webpack`
+
+```javascript
+module.exports = {
+  module: {
+    rules: [
+      {
+        test: /\.svg$/i,
+        issuer: /\.[jt]sx?$/,
+        use: [{ loader: '@svgr/webpack', options: { icon: true } }],
+      },
+    ],
+  },
+}
+```
+
+To enable using Svg as both image and React component
+`npm install url-loader --save-dev`
+
+```javascript
+  module.exports = {
+    module: {
+      rules: [
+        {
+          test: /\.svg$/i,
+          issuer: /\.[jt]sx?$/,
+          use: [
+            { loader: "@svgr/webpack", options: { icon: true } },
+            "url-loader",
+          ], // use url-loader to import svg as image
+        },
+      ]
+    }
+  }
+
+  // Implementation will be
+  import Download, { ReactComponent as DownloadIcon } from "./assets/icons/download.svg";
+
+  // Use svg as react component:
+  <DownloadIcon style={{ height: 40, width: 40, color: "green" }} />
+
+  // Use svg as image
+  <img
+    src={Download}
+    alt="download"
+    style={{ height: 40, width: 40, color: "green" }}
+  />
+```
+
+
+Note - The above method is deprecated and use the following method
+```javascript
+module.exports = {
+  module: {
+    rules: [
+      {
+        test: /\.svg$/i,
+        type: 'asset',
+        resourceQuery: /url/, // *.svg?url
+      },
+      {
+        test: /\.svg$/i,
+        issuer: /\.[jt]sx?$/,
+        resourceQuery: { not: [/url/] }, // exclude react component if *.svg?url
+        use: ['@svgr/webpack'],
+      },
+    ],
+  },
+}
+
+```
+
+##### Add assets
+```javascript
+  module.exports = {
+    module: {
+      rules: [
+        // images (png/jpg/gif) loader, it will be stored into the path specified under output for assetModuleFilename
+        {
+          test: /\.(png|jpg|gif)$/i,
+          type: "asset/resource",
+        },
+        // webp loader
+        {
+          test: /\.webp$/i,
+          type: "asset/resource",
+          generator: {
+            filename: "static/[hash][ext][query]", // for storing the webp in static folder inside dist
+          },
+        },
+      ]
+    },
+    output: {
+      assetModuleFilename: "images/[hash][ext][query]", // for storing the assets in images folder inside dist
+    },
+  }
+
 ```
