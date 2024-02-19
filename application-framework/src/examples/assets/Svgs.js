@@ -4,8 +4,8 @@ import React from "react";
 // import Download, { ReactComponent as DownloadIcon } from "./assets/icons/download.svg";
 
 // Using asset module
-import DownloadIcon from "../assets/icons/download.svg";
-import Download from "../assets/icons/download.svg?url";
+import DownloadIcon from "../../assets/icons/download.svg";
+import Download from "../../assets/icons/download.svg?url";
 
 const Svgs = () => {
   return (

@@ -1,6 +1,6 @@
 import React from "react";
-import AvatarWebp from "../assets/images/avatar.webp";
-import AvatarPNG from "../assets/images/avatar.png";
+import AvatarWebp from "../../assets/images/avatar.webp";
+import AvatarPNG from "../../assets/images/avatar.png";
 
 const Assets = () => {
   return (
