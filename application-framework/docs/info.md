@@ -15,7 +15,7 @@
 
 
 This --mode=development can also be added in `webpack.config.js` as following
-```json
+```javascript
   module.exports = {
     mode: 'development',
   };
