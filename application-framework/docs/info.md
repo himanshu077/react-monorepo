@@ -262,3 +262,122 @@ module.exports = {
   }
 
 ```
+
+### (Optional) - Add devServer into webpack.config.js
+
+```javascript
+module.exports = {
+  devServer: {
+    static: {
+      directory: path.resolve(__dirname, 'dist'),
+    },
+    port: 3000,
+    open: true,
+    hot: true,
+    compress: true,
+    historyApiFallback: true,
+  }
+}
+```
+
+### Install tailwind with webpack
+Install loaders `npm i --save-dev postcss postcss-loader postcss-preset-env`
+Install tailwindcss as peer dependency using `npm install --save-peer tailwindcss`
+
+Add the `postcss-loader` in the `/\.css$/` rule.
+```javascript
+ module: {
+    rules: [
+      {
+        test: /\.css$/,
+        use: [
+          MiniCssExtractPlugin.loader, // instead of "style-loader",
+          "css-loader",
+          "postcss-loader",
+        ],
+        exclude: /\.module\.css$/,
+      },
+    ],
+  },
+
+```
+
+Create a `tailwind.config.js` file in the root of the project and put the following configuration
+
+```javascript
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  content: ["./dist/*.html", "./src/**/*.js"],
+  theme: {
+    extend: {},
+  },
+  variants: {
+    extend: {},
+  },
+  plugins: [],
+};
+
+```
+
+Now create `postcss.config.js` file in the root of the project and put the following configuration
+```javascript
+const tailwindcss = require("tailwindcss");
+module.exports = {
+  plugins: ["postcss-preset-env", tailwindcss],
+};
+```
+Create a css file in `src/global.css` and put
+```css
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+```
+
+Import this file in the root entry `src/index.js` of the project
+```javascript
+import './global.css';
+```
+Run npm run build or npm start to start the project and see the changes.
+
+
+### Configure Environment variables with the webpack
+Install `dotenv-webpack` package using `npm install --save-dev dotenv-webpack`
+Create two files in the root of the project and put the `env_variables`
+
+`.env`
+FOO=bar-prod
+API_URL=https://www.xyz-prod.com/
+
+`.env.development`
+FOO=bar-dev
+API_URL=https://www.xyz-dev.com/
+
+Update the `webpack.config.js` file, by adding the `Dotenv` plugin and use function syntax. You can also use the implicit return instead of using `return` explicitly.
+
+```javascript
+const webpack = require('webpack');
+const Dotenv = require('dotenv-webpack');
+
+module.exports = env => {
+  return {
+    // ...
+    // ...
+    plugins: [
+      new Dotenv({
+        path: `./environments/.env${env.file ? `.${env.file}` : ''}`
+      }),
+      ...
+      ...
+    ]
+  }
+}
+
+```
+
+Update the package.json script
+```json
+  "scripts": {
+    "start": "webpack serve --mode=development --env file=development",
+    "build": "webpack --mode=production"
+  }
+```
