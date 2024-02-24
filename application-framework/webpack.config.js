@@ -1,8 +1,34 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const webpack = require("webpack");
+const Dotenv = require('dotenv-webpack');
 
-module.exports = {
+module.exports = (env) => ({
+  // entry: './src/index.js',
+  // output: {
+  //   path: path.resolve(__dirname, 'dist'),
+  //   filename: 'bundle.js',
+  // },
+  // Entry point to the application
+  entry: ["./src/index.js"],
+  // for clearing the dist folder, everytime we build
+  output: {
+    filename: "[name].bundle.js",
+    path: path.resolve(__dirname, "dist"),
+    clean: true,
+    assetModuleFilename: "images/[hash][ext][query]", // for storing the assets in images folder inside dist
+  },
+  devServer: {
+    static: {
+      directory: path.resolve(__dirname, 'dist'),
+    },
+    port: 3000,
+    open: true,
+    hot: true,
+    compress: true,
+    historyApiFallback: true,
+  },
   module: {
     rules: [
       {
@@ -36,6 +62,7 @@ module.exports = {
         use: [
           MiniCssExtractPlugin.loader, // instead of "style-loader",
           "css-loader",
+          "postcss-loader",
         ],
         exclude: /\.module\.css$/,
       },
@@ -86,14 +113,8 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: "[name].css", // Specify the filename for the extracted CSS
     }),
+    new Dotenv({
+      path: `./.env${env.file ? `.${env.file}` : ''}`,
+    }),
   ],
-  // Entry point to the application
-  entry: ["./src/index.js"],
-  // for clearing the dist folder, everytime we build
-  output: {
-    filename: "[name].bundle.js",
-    path: path.resolve(__dirname, "dist"),
-    clean: true,
-    assetModuleFilename: "images/[hash][ext][query]", // for storing the assets in images folder inside dist
-  },
-};
+});
