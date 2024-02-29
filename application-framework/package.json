@@ -2,7 +2,7 @@
   "name": "@himanshu077/application-framework",
   "version": "0.0.1",
   "description": "",
-  "main": "dist/main.bundle.js",
+  "main": "src/index.js",
   "module": "dist/main.bundle.js",
   "files": [
     "dist",
