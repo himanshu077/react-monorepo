@@ -11,28 +11,21 @@ module.exports = (env) => ({
   //   filename: 'bundle.js',
   // },
   // Entry point to the application
-  entry: ["./src/index.jsx"],
+  entry: ["./src/index.js"],
   // for clearing the dist folder, everytime we build
   output: {
-    filename: "[name].bundle.js",
+    // filename: "[name].bundle.js",
+    filename: "index.js",
     // filename: "index.js",
     path: path.resolve(__dirname, "dist"),
     clean: true,
     assetModuleFilename: "images/[hash][ext][query]", // for storing the assets in images folder inside dist
 
     // for export as component library
-    library: "application-framework",
+    library: "@himanshu077/application-framework",
     libraryTarget: "umd",
-    umdNamedDefine: true,
-    globalObject: "this",
-  },
-  // react is going to be an external dependency, so it should not be parsed by webpack
-  externals: {
-    react: "react",
-    tailwindcss: "tailwindcss",
-  },
-  resolve: {
-    extensions: [".js", ".jsx"],
+    // umdNamedDefine: true,
+    // globalObject: "this",
   },
   devServer: {
     static: {
@@ -136,4 +129,11 @@ module.exports = (env) => ({
       path: `./.env${env.file ? `.${env.file}` : ""}`,
     }),
   ],
+  // react is going to be an external dependency, so it should not be parsed by webpack
+  externals: {
+    react: "react"
+  },
+  resolve: {
+    extensions: [".jsx", ".js"],
+  },
 });
