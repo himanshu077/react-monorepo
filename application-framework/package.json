@@ -16,7 +16,7 @@
     "build": "webpack --mode=production",
     "serve": "npx serve -s dist",
     "link": "npm link",
-    "unlink": "npm unlink",
+    "unlink": "npm unlink"
   },
   "keywords": [],
   "author": "",
