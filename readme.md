@@ -1,7 +1,10 @@
 ### Introduction
 
 This project showing an examole of Monorepo structure where two modules are used `application-framework` and `application-main`.
-Application Framework holds the component that can be use in the other react project.
+
+**Application Framework holds the component that can be use in the other react project.**
+**Application Main is the react projec initiated by using vite**
+
 
 
 ### How to build and run locally
