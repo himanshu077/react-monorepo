@@ -1,4 +1,5 @@
 import React from "react";
+import styles from "./index.module.css";
 
 const Button = ({ variant = "info", children, ...rest }) => {
   const variantClasses = {
@@ -12,6 +13,7 @@ const Button = ({ variant = "info", children, ...rest }) => {
   };
   return (
     <button
+      style={styles.button}
       className={variantClasses[variant]}
       data-ripple-light="true"
       {...rest}
