@@ -2,7 +2,7 @@ const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const webpack = require("webpack");
-const Dotenv = require('dotenv-webpack');
+const Dotenv = require("dotenv-webpack");
 
 module.exports = (env) => ({
   // entry: './src/index.js',
@@ -14,14 +14,22 @@ module.exports = (env) => ({
   entry: ["./src/index.js"],
   // for clearing the dist folder, everytime we build
   output: {
-    filename: "[name].bundle.js",
+    // filename: "[name].bundle.js",
+    filename: "index.js",
+    // filename: "index.js",
     path: path.resolve(__dirname, "dist"),
     clean: true,
     assetModuleFilename: "images/[hash][ext][query]", // for storing the assets in images folder inside dist
+
+    // for export as component library
+    library: "@himanshu077/application-framework",
+    libraryTarget: "umd",
+    // umdNamedDefine: true,
+    // globalObject: "this",
   },
   devServer: {
     static: {
-      directory: path.resolve(__dirname, 'dist'),
+      directory: path.resolve(__dirname, "dist"),
     },
     port: 3000,
     open: true,
@@ -32,10 +40,14 @@ module.exports = (env) => ({
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /\.(js|jsx)$/, // for supporting .js and .jsx files
         exclude: /node_modules/,
         use: {
           loader: "babel-loader",
+          // for enabling react and es6 features
+          options: {
+            presets: ["@babel/preset-env", "@babel/preset-react"],
+          },
         },
       },
       // For enabling .module.css files
@@ -114,7 +126,14 @@ module.exports = (env) => ({
       filename: "[name].css", // Specify the filename for the extracted CSS
     }),
     new Dotenv({
-      path: `./.env${env.file ? `.${env.file}` : ''}`,
+      path: `./.env${env.file ? `.${env.file}` : ""}`,
     }),
   ],
+  // react is going to be an external dependency, so it should not be parsed by webpack
+  externals: {
+    react: "react"
+  },
+  resolve: {
+    extensions: [".jsx", ".js"],
+  },
 });
