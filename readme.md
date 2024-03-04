@@ -2,9 +2,9 @@
 
 This project showing an examole of Monorepo structure where two modules are used `application-framework` and `application-main`.
 
-- Application Framework holds the component that can be use in the other react project
-- Application Main is the react project initiated by using vite
-
+- `application-framework` holds the component that can be use in the other react project
+- `application-main` is the react project initiated by using vite
+- `application-client` is the react project initiated by using create-react-app and it is using the `@himanshu077/application-framework` as the dependency
 
 
 ### How to build and run locally
@@ -16,4 +16,28 @@ This project showing an examole of Monorepo structure where two modules are used
 - Go into the `application-main` and install the packages using npm install.
 - Consume the symlink by running the command `npm link` in the `application-main`.
 - Run the `application-main` by using command `npm run dev`.
+
+
+### How to use the uploaded package
+- Initialise any react project and do `npm i @himanshu077/application-framework` to install the package.
+- Add the styles provided by the package using in the root file say `index.js`
+```javascript
+import "@himanshu077/application-framework/dist/styles.css";
+```
+
+- Import Button component and use it
+```javascript
+import { Button } from "@himanshu077/application-framework";
+
+function App() {
+  return (
+    <div>
+      <Button onClick={() => alert("Hello")}>Say Hello</Button>
+    </div>
+  );
+}
+
+export default App;
+
+```
 
