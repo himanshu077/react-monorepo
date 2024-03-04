@@ -4,7 +4,7 @@ import "./App.css";
 function App() {
   const changeBackground = (variant) => {
     const allVariants = {
-      warning: "linear-gradient(white, orange) orange",
+      warn: "linear-gradient(white, orange) orange",
       success: "linear-gradient(white, green) green",
       danger: "linear-gradient(white, red) red",
       info: "linear-gradient(white, blue) blue",
@@ -23,7 +23,7 @@ function App() {
       <Button variant="success" onClick={() => changeBackground("success")}>
         Success Button
       </Button>
-      <Button variant="warning" onClick={() => changeBackground("warning")}>
+      <Button variant="warn" onClick={() => changeBackground("warn")}>
         Warning Button
       </Button>
     </div>
