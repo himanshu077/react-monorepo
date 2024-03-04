@@ -12,12 +12,13 @@ function App() {
     // prepare code to set the background of body on the click of the button variant
     document.body.style.background = allVariants[variant];
   };
+  console.log(Button, 'Heading Heading')
   return (
     <div>
-      <Button variant="danger" onClick={() => changeBackground("danger")}>
-        Danger Button
+      <Button>
+        asdasd
       </Button>
-      <Button variant="info" onClick={() => changeBackground("info")}>
+      {/* <Button variant="info" onClick={() => changeBackground("info")}>
         Info Button
       </Button>
       <Button variant="success" onClick={() => changeBackground("success")}>
@@ -25,7 +26,7 @@ function App() {
       </Button>
       <Button variant="warning" onClick={() => changeBackground("warning")}>
         Warning Button
-      </Button>
+      </Button> */}
     </div>
   );
 }
