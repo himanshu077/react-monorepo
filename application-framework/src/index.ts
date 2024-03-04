@@ -1,5 +1,4 @@
+import "./index.css";
 import Button from "./components/Button";
-
-console.log(Button, "Button component here");
 
 export { Button };

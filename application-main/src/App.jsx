@@ -4,7 +4,7 @@ import "./App.css";
 function App() {
   const changeBackground = (variant) => {
     const allVariants = {
-      warning: "linear-gradient(white, orange) orange",
+      warn: "linear-gradient(white, orange) orange",
       success: "linear-gradient(white, green) green",
       danger: "linear-gradient(white, red) red",
       info: "linear-gradient(white, blue) blue",
@@ -12,21 +12,20 @@ function App() {
     // prepare code to set the background of body on the click of the button variant
     document.body.style.background = allVariants[variant];
   };
-  console.log(Button, 'Heading Heading')
   return (
     <div>
-      <Button>
-        asdasd
+      <Button variant="danger" onClick={() => changeBackground("danger")}>
+        Danger Button
       </Button>
-      {/* <Button variant="info" onClick={() => changeBackground("info")}>
+      <Button variant="info" onClick={() => changeBackground("info")}>
         Info Button
       </Button>
       <Button variant="success" onClick={() => changeBackground("success")}>
         Success Button
       </Button>
-      <Button variant="warning" onClick={() => changeBackground("warning")}>
+      <Button variant="warn" onClick={() => changeBackground("warn")}>
         Warning Button
-      </Button> */}
+      </Button>
     </div>
   );
 }
