@@ -1,4 +1,5 @@
 const path = require("path");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
   mode: "production",
@@ -6,8 +7,8 @@ module.exports = {
   output: {
     filename: "index.js",
     path: path.resolve(__dirname, "dist"),
-    library: "ui-lib",
-    libraryTarget: "umd"
+    library: "@himanshu077/application-framework",
+    libraryTarget: "umd",
   },
   module: {
     rules: [
@@ -15,8 +16,28 @@ module.exports = {
         test: /\.tsx?$/,
         use: ["ts-loader"],
       },
+      {
+        test: /\.css$/i,
+        use: [
+          MiniCssExtractPlugin.loader,
+          "css-loader",
+          {
+            loader: "postcss-loader",
+            options: {
+              postcssOptions: {
+                plugins: [require("tailwindcss"), require("autoprefixer")],
+              },
+            },
+          },
+        ],
+      },
     ],
   },
+  plugins: [
+    new MiniCssExtractPlugin({
+      filename: "styles.css", // Change the output CSS filename as needed
+    }),
+  ],
   externals: {
     react: "react",
   },
