@@ -4,10 +4,17 @@
   "description": "This project showing an example of Monorepo structure where two modules are used `application-framework` and `application-main`.",
   "main": "index.js",
   "scripts": {
+    "framework:install": "cd application-framework && npm install",
+    "main:install": "cd application-main && npm install",
+    "client:install": "cd application-client && npm install",
+    "install-all": "npm-run-all -s framework:install main:install client:install",
+
     "all": "npm-run-all -s framework:build framework:link main:link",
     "framework:build": "cd application-framework && npm run unlink && npm run build && npm run link",
     "framework:link": "cd ..",
-    "main:link": "cd application-main && npm run unlink && npm run link && npm run dev"
+    
+    "main:link": "cd application-main && npm run unlink && npm run link && npm run dev",
+    "run-app": "npm-run-all -s framework:build framework:link main:link"
   },
   "repository": {
     "type": "git",
