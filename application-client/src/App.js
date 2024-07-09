@@ -1,4 +1,5 @@
 import { Button } from "@himanshu077/application-framework";
+const Emittery = require('emittery-up');
 
 function App() {
   return (
